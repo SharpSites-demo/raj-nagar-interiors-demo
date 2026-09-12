@@ -88,61 +88,120 @@ float tileSd (vec2 w, ivec2 idx, float halfSize) {
   return roundedBox(w - center, vec2(halfSize), min(uCornerPx, halfSize));
 }
 
-vec2 unproject (vec2 w, float lift) {
-  vec2 vanish = uVanish;
-  float persp = uPersp;
-  float k = lift * uLiftPx;
-  float denom = max(persp, 1.0);
-  vec2 d = w - vanish;
-  return vanish + d * (denom / max(denom - k, 1.0));
+vec2 unproject (vec2 p, float z) {
+  return uVanish + (p - uVanish) * (uPersp - z) / uPersp;
 }
 
 void main () {
-  vec2 w = vUv * uResolution;
-  float lift = tileLift(ivec2(floor(w / uTilePx)));
-  vec2 wTop = unproject(w, lift);
-  ivec2 idxTop = ivec2(floor(wTop / uTilePx));
-  float halfSize = (uTilePx - uGapPx) * 0.5;
-  float sdTop = tileSd(wTop, idxTop, halfSize);
-  float edge = 1.0;
-  float shade = 0.0;
-  vec4 content = texture(uContent, vUv / max(uMaxX, 1e-4) * vec2(uMaxX, 1.0));
-  float alpha = content.a;
-  if (uHasContent == 1.0 && sdTop > 0.0) {
-    vec2 wSide = wTop;
-    ivec2 idxSide = idxTop;
-    float sdSide = sdTop;
-    if (lift > 0.0 && wTop.y > float(idxTop.y) * uTilePx) {
-      idxSide = ivec2(idxTop.x, idxTop.y - 1);
-      sdSide = tileSd(wTop, idxSide, halfSize);
-    } else if (lift < 0.0 && wTop.y < float(idxTop.y + 1) * uTilePx) {
-      idxSide = ivec2(idxTop.x, idxTop.y + 1);
-      sdSide = tileSd(wTop, idxSide, halfSize);
-    }
-    if (sdSide <= 0.0) {
-      vec2 uvSide = (vec2(idxSide) * uTilePx + (wTop - vec2(idxSide) * uTilePx)) / uResolution;
-      content = texture(uContent, uvSide / max(uMaxX, 1e-4) * vec2(uMaxX, 1.0));
-      alpha = content.a;
-      shade = -abs(lift) * uShading;
-      edge = 0.0;
-    } else {
-      vec2 uvTop = wTop / uResolution;
-      content = texture(uContent, uvTop / max(uMaxX, 1e-4) * vec2(uMaxX, 1.0));
-      alpha = content.a;
-      shade = abs(lift) * uShading;
-    }
+  if (vUv.x > uMaxX) {
+    outColor = vec4(0.0);
+    return;
   }
-  float t = clamp(abs(lift) * uTintStrength, 0.0, 1.0);
-  vec3 col = content.rgb;
-  if (uHasContent == 1.0) {
-    float bestLift = lift;
-    ivec2 idx = ivec2(floor(w / uTilePx));
-    for (int dy = -1; dy <= 1; dy++) {
-      for (int dx = -1; dx <= 1; dx++) {
-        float l = tileLift(idx + ivec2(dx, dy));
-        if (abs(l) > abs(bestLift)) bestLift = l;
+
+  vec2 pos = vUv * uResolution;
+  float halfSize = uTilePx * 0.5 - uGapPx * 0.5;
+
+  float bestZ = -1e6;
+  float edgeSd = 1.0;
+  ivec2 bestIdx = ivec2(-1);
+  vec2 bestW = pos;
+  float bestLift = 0.0;
+  bool bestIsWall = false;
+  vec2 wallN = vec2(0.0);
+  ivec2 lastIdx = ivec2(-9999);
+
+  for (int k = 0; k < 8; k++) {
+    float probeZ = (float(k) / 3.5 - 1.0) * uLiftPx;
+    ivec2 idx = clamp(
+      ivec2(floor(unproject(pos, probeZ) / uTilePx)),
+      ivec2(0), uGridTiles - 1
+    );
+    if (all(equal(idx, lastIdx))) continue;
+    lastIdx = idx;
+
+    float lift = tileLift(idx);
+    float h = lift * uLiftPx;
+
+    if (h <= bestZ) continue;
+
+    vec2 wh = unproject(pos, h);
+    float sdTop = tileSd(wh, idx, halfSize);
+
+    if (sdTop < 0.75) {
+      bestZ = h;
+      edgeSd = sdTop;
+      bestIdx = idx;
+      bestW = wh;
+      bestLift = lift;
+      bestIsWall = false;
+    } else if (h > 0.0) {
+      float sd0 = tileSd(pos, idx, halfSize);
+      if (sd0 < 0.75) {
+        float za = 0.0;
+        float zb = h;
+        for (int r = 0; r < 3; r++) {
+          float zm = (za + zb) * 0.5;
+          float sm = tileSd(unproject(pos, zm), idx, halfSize);
+          if (sm < 0.0) { za = zm; } else { zb = zm; }
+        }
+        float zStar = (za + zb) * 0.5;
+        if (zStar > bestZ) {
+          vec2 wz = unproject(pos, zStar);
+          vec2 e = vec2(0.75, 0.0);
+          wallN = normalize(vec2(
+            tileSd(wz + e.xy, idx, halfSize) - tileSd(wz - e.xy, idx, halfSize),
+            tileSd(wz + e.yx, idx, halfSize) - tileSd(wz - e.yx, idx, halfSize)
+          ) + 1e-5);
+          bestZ = zStar;
+          edgeSd = sd0;
+          bestIdx = idx;
+          bestW = wz;
+          bestLift = lift;
+          bestIsWall = true;
+        }
       }
     }
+  }
+
+  if (bestIdx.x < 0) {
+    outColor = vec4(0.0);
+    return;
+  }
+  float mask = 1.0 - smoothstep(-0.75, 0.75, edgeSd);
+  if (mask <= 0.0) {
+    outColor = vec4(0.0);
+    return;
+  }
+
+  vec2 tileOrigin = vec2(bestIdx) * uTilePx;
+  vec2 samplePos = clamp(bestW, tileOrigin + 0.5, tileOrigin + uTilePx - 0.5);
+  vec2 sampleUv = samplePos / uResolution;
+  sampleUv.x = min(sampleUv.x, uMaxX - 0.002);
+  vec4 content;
+  if (uHasContent > 0.5) {
+    content = texture(uContent, vec2(sampleUv.x, 1.0 - sampleUv.y));
+  } else {
+    float liftAmt = clamp(abs(bestLift), 0.0, 1.0);
+    content = vec4(
+      mix(vec3(0.62), uTint, clamp(uTintStrength, 0.0, 1.0)),
+      liftAmt * 0.55);
+  }
+
+  float t = clamp(bestLift, 0.0, 1.0) * uTintStrength;
+  vec3 col;
+  float alpha;
+
+  if (bestIsWall) {
+    vec2 lightDir = normalize(vec2(-0.55, 0.8));
+    float facing = dot(wallN, lightDir);
+    float shade = 1.0 - (0.5 - 0.32 * facing) * uShading;
+    col = content.rgb * shade;
+
+    alpha = uHasContent > 0.5 ? max(content.a, 0.85) : min(content.a * 1.5, 0.85);
+  } else {
+    float gx = tileLift(bestIdx + ivec2(1, 0)) - tileLift(bestIdx - ivec2(1, 0));
+    float gy = tileLift(bestIdx + ivec2(0, 1)) - tileLift(bestIdx - ivec2(0, 1));
+    float shade = (gy - gx) * 0.25 * uShading;
     shade += clamp(bestLift, -1.0, 1.0) * 0.1 * uShading;
     col = content.rgb * (1.0 + shade * 0.85) + shade * 0.12;
     alpha = clamp(content.a + t + abs(shade) * 0.5, 0.0, 1.0);
@@ -151,6 +210,4 @@ void main () {
   col = mix(col, uTint, t);
   float aOut = alpha * mask;
   outColor = vec4(col * aOut, aOut);
-}`;
-/* MIT + Commons Clause — (c) 2026 David Haz, github.com/DavidHDev/canvas-ui (Canvas UI, Grid vanilla WebGL build) */
-function supportsHtmlInCanvas(){if(typeof document=="undefined")return!1;let e=document.createElement("canvas"),t=e.getContext("2d");return!!(t&&typeof t.drawElementImage=="function"&&typeof e.requestPaint=="function")}function createGrid(e,t={}){let o={...Ee,...t},{source:n,content:a,output:r}=e,i=r.getContext("webgl2",{alpha:!0,depth:!1,stencil:!1,antialias:!1,premultipliedAlpha:!0});if(!i||i.isContextLost())return null;let s=n.getContext("2d"),l=n,c=!!(s&&typeof s.drawElementImage=="function"&&typeof l.requestPaint=="function"),u=!1,d=()=>{};if(c){l.onpaint=()=>{try{s.reset(),s.drawElementImage(a,0,0),u=!0,d()}catch{}}}function p(e,t){let o=i.createShader(e);return i.shaderSource(o,t),i.compileShader(o),i.getShaderParameter(o,i.COMPILE_STATUS)||console.error("Grid shader error:",i.getShaderInfoLog(o)),o}function g(t){let o=p(i.VERTEX_SHADER,ge),n=p(i.FRAGMENT_SHADER,t),a=i.createProgram();i.attachShader(a,o),i.attachShader(a,n),i.linkProgram(a);let r={};let m=i.getProgramParameter(a,i.ACTIVE_UNIFORMS);for(let e=0;e<m;e++){let t=i.getActiveUniform(a,e).name;r[t]=i.getUniformLocation(a,t)}return{program:a,uniforms:r}}let m=g(be),h=g(Re),y=i.createBuffer();i.bindBuffer(i.ARRAY_BUFFER,y),i.bufferData(i.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),i.STATIC_DRAW);let f=i.createTexture();i.bindTexture(i.TEXTURE_2D,f),i.texParameteri(i.TEXTURE_2D,i.TEXTURE_MIN_FILTER,i.LINEAR),i.texParameteri(i.TEXTURE_2D,i.TEXTURE_MAG_FILTER,i.LINEAR),i.texParameteri(i.TEXTURE_2D,i.TEXTURE_WRAP_S,i.CLAMP_TO_EDGE),i.texParameteri(i.TEXTURE_2D,i.TEXTURE_WRAP_T,i.CLAMP_TO_EDGE);let w=i.createTexture(),T=i.createTexture(),x=null,v=null;function b(){if(x&&v)return;let e=Math.ceil(o.tileSize*2),t=Math.ceil(o.tileSize*2);x=i.createFramebuffer(),v=i.createTexture(),i.bindTexture(i.TEXTURE_2D,v),i.texImage2D(i.TEXTURE_2D,0,i.RGBA,e,t,0,i.RGBA,i.UNSIGNED_BYTE,null),i.texParameteri(i.TEXTURE_2D,i.TEXTURE_MIN_FILTER,i.NEAREST),i.texParameteri(i.TEXTURE_2D,i.TEXTURE_MAG_FILTER,i.NEAREST),i.texParameteri(i.TEXTURE_2D,i.TEXTURE_WRAP_S,i.CLAMP_TO_EDGE),i.texParameteri(i.TEXTURE_2D,i.TEXTURE_WRAP_T,i.CLAMP_TO_EDGE),i.bindFramebuffer(i.FRAMEBUFFER,x),i.framebufferTexture2D(i.FRAMEBUFFER,i.COLOR_ATTACHMENT0,i.TEXTURE_2D,v,0),i.bindFramebuffer(i.FRAMEBUFFER,null)}let S=createRectCache(a),A=null;function L(){let e=r.clientWidth,t=r.clientHeight;if(!e||!t)return;if(r.width!==e*devicePixelRatio||r.height!==t*devicePixelRatio){r.width=e*devicePixelRatio,r.height=t*devicePixelRatio}A=Math.min(1,Math.max(.05,a.clientWidth/Math.max(r.clientWidth,1)));if(c){let e=Math.max(1,Math.round(n.clientWidth)),t=Math.max(1,Math.round(n.clientHeight));if(n.width!==e*devicePixelRatio||n.height!==t*devicePixelRatio){n.width=e*devicePixelRatio,n.height=t*devicePixelRatio}l.requestPaint()}}L();function C(){if(!c||!u)return;u=!1,i.bindTexture(i.TEXTURE_2D,f),i.texImage2D(i.TEXTURE_2D,0,i.RGBA,i.RGBA,i.UNSIGNED_BYTE,n)}let P=[],I=0,O=3;function D(e,t,o,n){P.push({x:e,y:t,age:0,str:n}),P.length>M&&P.shift()}function R(e){let t=[];for(let o of P){o.age+=e;let n=Math.exp(-o.age/o.str);n>.01&&t.push(o)}return P=t,t}function _(e,t,o,n){i.useProgram(m.program),i.bindFramebuffer(i.FRAMEBUFFER,v),i.viewport(0,0,x.width,x.height),i.clearColor(0,0,0,0),i.clear(i.COLOR_BUFFER_BIT),i.useProgram(m.program),i.uniform1f(m.uniforms.uWorldPerTile,o),i.uniform1f(m.uniforms.uWaveSpeed,o.waveSpeed),i.uniform1f(m.uniforms.uFrequency,o.frequency),i.uniform1f(m.uniforms.uWaveWidth,o.waveWidth),i.uniform1f(m.uniforms.uFadeTime,o.fadeTime),i.uniform1f(m.uniforms.uAmplitude,o.amplitude),i.uniform1f(m.uniforms.uJitter,o.jitter),i.uniform1f(m.uniforms.uMaxLift,o.maxLift),i.uniform1i(m.uniforms.uTrailCount,n),i.activeTexture(i.TEXTURE0),i.bindTexture(i.TEXTURE_2D,w),i.uniform1i(m.uniforms.uTrail,0),i.drawArrays(i.TRIANGLE_STRIP,0,4),i.bindFramebuffer(i.FRAMEBUFFER,null)}function k(e,t){i.bindTexture(i.TEXTURE_2D,w),i.texSubImage2D(i.TEXTURE_2D,0,0,0,e,t,1,1,i.RGBA,i.UNSIGNED_BYTE,new Uint8Array([t.x*255,t.y*255,t.age*60,t.str*255]))}let z=null,W={x:0,y:0,str:1};function U(e){let t=r.getBoundingClientRect(),o=(e.clientX-t.left)/t.width,n=(e.clientY-t.top)/t.height;D(o,n,1,1)}let G=r.parentElement??r;G.addEventListener("pointermove",U,{passive:!0}),G.addEventListener("pointerleave",()=>{z=null},{passive:!0});let j=0,q=performance.now(),F=!1,B=!1,V=!0,H=window.matchMedia("(prefers-reduced-motion: reduce)"),J=H.matches;function X(e){if(F)return;if(!V){B=!1;return}let t=Math.min((e-q)/1e3,1/30);q=e;let n=J?0:R(t);if(c&&C(),i.viewport(0,0,r.width,r.height),i.clearColor(0,0,0,0),i.clear(i.COLOR_BUFFER_BIT),!c&&!n.length){B=!1;return}b(),i.useProgram(m.program),i.bindFramebuffer(i.FRAMEBUFFER,x),i.viewport(0,0,v.width,v.height),i.clear(i.COLOR_BUFFER_BIT),i.uniform1i(m.uniforms.uTrailCount,n.length),i.uniform1f(m.uniforms.uWorldPerTile,1/o.tileSize),i.activeTexture(i.TEXTURE0),i.bindTexture(i.TEXTURE_2D,w),i.uniform1i(m.uniforms.uTrail,0),n.forEach((e,t)=>k(t,e)),i.bindFramebuffer(i.FRAMEBUFFER,null),i.useProgram(h.program),i.activeTexture(i.TEXTURE0),i.bindTexture(i.TEXTURE_2D,f),i.uniform1i(h.uniforms.uContent,0),i.uniform1f(h.uniforms.uHasContent,c?1:0),i.activeTexture(i.TEXTURE1),i.bindTexture(i.TEXTURE_2D,v),i.uniform1i(h.uniforms.uTiles,1),i.activeTexture(i.TEXTURE0),i.uniform2f(h.uniforms.uResolution,r.width,r.height),i.uniform2i(h.uniforms.uGridTiles,Math.ceil(r.width/(o.tileSize*devicePixelRatio)),Math.ceil(r.height/(o.tileSize*devicePixelRatio))),i.uniform1f(h.uniforms.uTilePx,o.tileSize*devicePixelRatio),i.uniform1f(h.uniforms.uGapPx,o.gap*devicePixelRatio),i.uniform1f(h.uniforms.uCornerPx,o.cornerRadius*devicePixelRatio),i.uniform1f(h.uniforms.uLiftPx,o.liftHeight*devicePixelRatio),i.uniform1f(h.uniforms.uPersp,o.perspective),i.uniform2f(h.uniforms.uVanish,.5+(W.x-.5)*o.tilt*.2,.5+(W.y-.5)*o.tilt*.2),i.uniform1f(h.uniforms.uShading,o.shading),i.uniform3f(h.uniforms.uTint,o.tint[0],o.tint[1],o.tint[2]),i.uniform1f(h.uniforms.uTintStrength,o.tintStrength),i.uniform1f(h.uniforms.uMaxX,A),i.bindBuffer(i.ARRAY_BUFFER,y),i.enableVertexAttribArray(0),i.vertexAttribPointer(0,2,i.FLOAT,!1,0,0),i.drawArrays(i.TRIANGLE_STRIP,0,4)}function Y(){if(F||B)return;B=!0,q=performance.now(),j=requestAnimationFrame(X)}d=Y,Y();function Z(){J=H.matches,J&&(P.length=0),Y()}H.addEventListener("change",Z);let K=new ResizeObserver(()=>{L(),Y()});K.observe(r),K.observe(a);let Q=new IntersectionObserver(e=>{V=e[e.length-1]?.isIntersecting??!0,V?Y():B=!1},{threshold:0});Q.observe(r);let ee=new MutationObserver(()=>{L(),Y()});ee.observe(a,{attributes:!0,childList:!0,subtree:!0});let te=setInterval(()=>{if(o.idleRipples<=0)return;let e=performance.now();if(e-I>o.idleRipples*1e3&&e-q>1e3*(J?0:O)){I=e;let t=.2+Math.random()*.6,o=.2+Math.random()*.6;D(t,o,1,.6)}},500);return{setOptions(e){Object.assign(o,e)},destroy(){F=!0,S.destroy(),cancelAnimationFrame(j),K.disconnect(),Q.disconnect(),ee.disconnect(),clearInterval(te),H.removeEventListener("change",Z),G.removeEventListener("pointermove",U),G.removeEventListener("pointerleave",U),i.deleteTexture(f),i.deleteTexture(w),v&&i.deleteTexture(v),x&&i.deleteFramebuffer(x);for(let e of[m,h])i.deleteProgram(e.program),i.deleteShader(e.vertexShader),i.deleteShader(e.fragmentShader);i.deleteBuffer(y),c&&(l.onpaint=null)}}}window.CanvasGrid={createGrid,supportsHtmlInCanvas};
+}`;function fe(){if(typeof document=="undefined")return!1;let h=document.createElement("canvas"),T=h.getContext("2d");return!!(T&&typeof T.drawElementImage=="function"&&typeof h.requestPaint=="function")}function ce(h,T={}){var le;let r={...Ee,...T},{source:f,content:B,output:o}=h,e=o.getContext("webgl2",{alpha:!0,depth:!1,stencil:!1,antialias:!1,premultipliedAlpha:!0});if(!e||e.isContextLost())return null;let _=f.getContext("2d"),A=f,g=!!(_&&typeof _.drawElementImage=="function"&&typeof A.requestPaint=="function"),w=!1,V=()=>{};g&&(A.onpaint=()=>{try{_.reset(),_.drawElementImage(B,0,0),w=!0,V()}catch{}});function Z(t,a){let n=e.createShader(t);return e.shaderSource(n,a),e.compileShader(n),e.getShaderParameter(n,e.COMPILE_STATUS)||console.error("Grid shader error:",e.getShaderInfoLog(n)),n}function J(t){let a=Z(e.VERTEX_SHADER,ge),n=Z(e.FRAGMENT_SHADER,t),i=e.createProgram();e.attachShader(i,a),e.attachShader(i,n),e.linkProgram(i);let u={},S=e.getProgramParameter(i,e.ACTIVE_UNIFORMS);for(let v=0;v<S;v++){let p=e.getActiveUniform(i,v);u[p.name]=e.getUniformLocation(i,p.name)}return{program:i,uniforms:u,vertexShader:a,fragmentShader:n}}let l=J(Re),c=J(be),Q=e.createBuffer();e.bindBuffer(e.ARRAY_BUFFER,Q),e.bufferData(e.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),e.STATIC_DRAW),e.enableVertexAttribArray(0),e.vertexAttribPointer(0,2,e.FLOAT,!1,0,0);let L=e.createTexture();e.bindTexture(e.TEXTURE_2D,L),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.CLAMP_TO_EDGE),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.CLAMP_TO_EDGE),e.texImage2D(e.TEXTURE_2D,0,e.RGBA,1,1,0,e.RGBA,e.UNSIGNED_BYTE,new Uint8Array([0,0,0,0]));let E=new Float32Array(M*4),U=e.createTexture();e.bindTexture(e.TEXTURE_2D,U),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.NEAREST),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.NEAREST),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.CLAMP_TO_EDGE),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.CLAMP_TO_EDGE),e.texImage2D(e.TEXTURE_2D,0,e.RGBA32F,M,1,0,e.RGBA,e.FLOAT,E);function K(){return Math.min(window.devicePixelRatio||1,2)}let d=null,x=null,b=0,R=0;function me(){let t=Math.max(r.tileSize,8)*K(),a=Math.max(1,Math.ceil(o.width/t)),n=Math.max(1,Math.ceil(o.height/t));d&&a===b&&n===R||(b=a,R=n,d&&e.deleteTexture(d),x&&e.deleteFramebuffer(x),d=e.createTexture(),e.bindTexture(e.TEXTURE_2D,d),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.NEAREST),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.NEAREST),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.CLAMP_TO_EDGE),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.CLAMP_TO_EDGE),e.texImage2D(e.TEXTURE_2D,0,e.RGBA,b,R,0,e.RGBA,e.UNSIGNED_BYTE,null),x=e.createFramebuffer(),e.bindFramebuffer(e.FRAMEBUFFER,x),e.framebufferTexture2D(e.FRAMEBUFFER,e.COLOR_ATTACHMENT0,e.TEXTURE_2D,d,0),e.bindFramebuffer(e.FRAMEBUFFER,null))}let $=1;function N(){let t=K(),a=Math.max(1,Math.round(o.clientWidth*t)),n=Math.max(1,Math.round(o.clientHeight*t));if((o.width!==a||o.height!==n)&&(o.width=a,o.height=n),$=Math.min(1,Math.max(.05,B.clientWidth/Math.max(o.clientWidth,1))),g){let i=Math.max(1,Math.round(f.clientWidth)),u=Math.max(1,Math.round(f.clientHeight));(f.width!==i*t||f.height!==u*t)&&(f.width=i*t,f.height=u*t),A.requestPaint()}}N();function de(){!g||!w||(w=!1,e.bindTexture(e.TEXTURE_2D,L),e.texImage2D(e.TEXTURE_2D,0,e.RGBA,e.RGBA,e.UNSIGNED_BYTE,f))}let s=[],I=null,H=se,C=0;function ee(t){s.length>=M&&s.shift(),s.push(t)}function he(t){let a=Math.max(r.fadeTime,.1)*4;for(let i=s.length-1;i>=0;i--)s[i].age+=t,s[i].age>a&&s.splice(i,1);if(H+=t,r.idleRipples>0&&H>=se&&(C+=t,C>=r.idleRipples)){C=0;let i=Math.max(o.clientWidth,1)/Math.max(o.clientHeight,1);ee({x:(.2+Math.random()*.6)*i,y:.2+Math.random()*.6,age:0,strength:.8+Math.random()*.3})}let n=Math.min(s.length,M);for(let i=0;i<n;i++){let u=i*4;E[u]=s[i].x,E[u+1]=s[i].y,E[u+2]=s[i].age,E[u+3]=s[i].strength}return e.bindTexture(e.TEXTURE_2D,U),e.texSubImage2D(e.TEXTURE_2D,0,0,0,M,1,e.RGBA,e.FLOAT,E),n}let D=.5,F=.5,y=.5,X=.5;function Te(t,a){de(),me();let n=o.width/Math.max(o.clientWidth,1),i=Math.max(r.tileSize,8)*n,u=1-Math.exp(-a*4);D+=(y-D)*u,F+=(X-F)*u,e.useProgram(c.program),e.activeTexture(e.TEXTURE0),e.bindTexture(e.TEXTURE_2D,U),e.uniform1i(c.uniforms.uTrail,0),e.uniform1i(c.uniforms.uTrailCount,t),e.uniform1f(c.uniforms.uWorldPerTile,i/o.height),e.uniform1f(c.uniforms.uWaveSpeed,Math.max(r.waveSpeed,.01)),e.uniform1f(c.uniforms.uFrequency,r.frequency),e.uniform1f(c.uniforms.uWaveWidth,Math.max(r.waveWidth,.01)),e.uniform1f(c.uniforms.uFadeTime,Math.max(r.fadeTime,.1)),e.uniform1f(c.uniforms.uAmplitude,r.amplitude),e.uniform1f(c.uniforms.uJitter,r.jitter),e.uniform1f(c.uniforms.uMaxLift,Math.max(r.maxLift,.01)),e.bindFramebuffer(e.FRAMEBUFFER,x),e.viewport(0,0,b,R),e.drawArrays(e.TRIANGLE_STRIP,0,4),e.useProgram(l.program),e.activeTexture(e.TEXTURE0),e.bindTexture(e.TEXTURE_2D,L),e.uniform1i(l.uniforms.uContent,0),e.uniform1f(l.uniforms.uHasContent,g?1:0),e.activeTexture(e.TEXTURE1),e.bindTexture(e.TEXTURE_2D,d),e.uniform1i(l.uniforms.uTiles,1),e.activeTexture(e.TEXTURE0),e.uniform2f(l.uniforms.uResolution,o.width,o.height),e.uniform2i(l.uniforms.uGridTiles,b,R),e.uniform1f(l.uniforms.uTilePx,i),e.uniform1f(l.uniforms.uGapPx,Math.max(r.gap,0)*n),e.uniform1f(l.uniforms.uCornerPx,Math.max(r.cornerRadius,0)*n),e.uniform1f(l.uniforms.uLiftPx,Math.max(r.liftHeight,0)*n),e.uniform1f(l.uniforms.uPersp,Math.max(r.perspective,100)*n),e.uniform2f(l.uniforms.uVanish,(.5+(D-.5)*r.tilt)*o.width,(.5+(.5-F)*r.tilt)*o.height),e.uniform1f(l.uniforms.uShading,r.shading),e.uniform3f(l.uniforms.uTint,r.tint[0],r.tint[1],r.tint[2]),e.uniform1f(l.uniforms.uTintStrength,r.tintStrength),e.uniform1f(l.uniforms.uMaxX,$),e.bindFramebuffer(e.FRAMEBUFFER,null),e.viewport(0,0,o.width,o.height),e.drawArrays(e.TRIANGLE_STRIP,0,4)}let q=0,k=performance.now(),j=!1,G=!1,z=!0,W=window.matchMedia("(prefers-reduced-motion: reduce)"),P=W.matches;function te(t){if(j)return;if(!z){G=!1;return}let a=Math.min((t-k)/1e3,1/30);k=t;let n=P?0:he(a);Te(n,a);let i=Math.abs(D-y)+Math.abs(F-X)>.001;if(!(!P&&(n>0||r.idleRipples>0||i))&&!w){G=!1;return}q=requestAnimationFrame(te)}function m(){j||G||!z||(G=!0,k=performance.now(),q=requestAnimationFrame(te))}V=m,m();function ie(){P=W.matches,P&&(s.length=0),m()}W.addEventListener("change",ie);let Y=new ResizeObserver(()=>{N(),m()});Y.observe(o),Y.observe(B);let ne=new IntersectionObserver(t=>{var a,n;z=(n=(a=t[t.length-1])==null?void 0:a.isIntersecting)!=null?n:!0,z&&m()});ne.observe(o);let O=(le=o.parentElement)!=null?le:o,re=ue(o);function ae(t){if(P)return;let a=re.current,n=Math.max(a.width,1)/Math.max(a.height,1),i=(t.clientX-a.left)/Math.max(a.width,1),u=(t.clientY-a.top)/Math.max(a.height,1);y=i,X=u;let S=i*n,v=1-u,p=.2;if(I){let xe=S-I.x,ve=v-I.y;if(p=Math.hypot(xe,ve),p<pe){m();return}}ee({x:S,y:v,age:0,strength:Math.min(Math.max(p*6,.25),1.2)}),I={x:S,y:v},H=0,C=0,m()}function oe(){y=.5,X=.5,m()}return O.addEventListener("pointermove",ae,{passive:!0}),O.addEventListener("pointerleave",oe,{passive:!0}),{setOptions(t){Object.entries(t).some(([a,n])=>r[a]!==n)&&(Object.assign(r,t),m())},resize(){N(),m()},destroy(){j=!0,re.destroy(),cancelAnimationFrame(q),Y.disconnect(),ne.disconnect(),W.removeEventListener("change",ie),O.removeEventListener("pointermove",ae),O.removeEventListener("pointerleave",oe),e.deleteTexture(L),e.deleteTexture(U),d&&e.deleteTexture(d),x&&e.deleteFramebuffer(x);for(let t of[l,c])e.deleteProgram(t.program),e.deleteShader(t.vertexShader),e.deleteShader(t.fragmentShader);e.deleteBuffer(Q),g&&(A.onpaint=null)}}}window.CanvasGrid={createGrid:ce,supportsHtmlInCanvas:fe};})();
