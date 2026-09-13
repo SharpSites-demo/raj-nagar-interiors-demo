@@ -2,233 +2,311 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interior Design Raj Nagar Extension Ghaziabad — Home Interiors, Kitchens & Wardrobes</title>
-<meta name="description" content="Interior designer in Raj Nagar Extension, Ghaziabad. Home interiors, modular kitchens and wardrobes with finishing clients rate 5.0 on Google. See the work, then request a project quote in one message.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Interior Designer Raj Nagar Extension Ghaziabad — Kitchens & Wardrobes</title>
+<meta name="description" content="Home interiors in Raj Nagar Extension, Ghaziabad — modular kitchens, wardrobes and full-home work, rated 5.0 across 57 Google reviews. See the work, then send your floor plan for a quote in one message.">
+<meta property="og:title" content="Interior Design Raj Nagar Extension — rated 5.0 across 57 Google reviews">
+<meta property="og:description" content="Modular kitchens, wardrobes and full-home interiors in Raj Nagar Extension, Ghaziabad. See finished work room by room, then get a project quote in one message.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sharpsites-demo.github.io/raj-nagar-interiors-demo/">
+<link rel="canonical" href="https://sharpsites-demo.github.io/raj-nagar-interiors-demo/">
+<meta name="theme-color" content="#17191b">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Interior Design Raj Nagar Extension Ghaziabad","url":"https://sharpsites-demo.github.io/raj-nagar-interiors-demo/","telephone":"+918448294656","address":{"@type":"PostalAddress","streetAddress":"Shop number 45, Ashiana Palm Court, Raj Nagar Extension","addressLocality":"Ghaziabad","addressRegion":"Uttar Pradesh","postalCode":"201003","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":28.7029351,"longitude":77.4320731},"openingHours":"Mo-Su 00:00-23:59","aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"57"},"knowsAbout":["Interior design","Modular kitchens","Wardrobes","Home interiors"]}
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="canvas-grid.js" defer></script>
 <style>
-:root{--clay:#b4552d;--clay-d:#8f3f1e;--ink:#241d18;--ink-2:#5c5049;--paper:#f6f1ea;--card:#fffdf9;--line:#e4d9cc;--deep:#2a211b;--wa:#25D366;--wa-d:#1da851;--gold:#e8a33d;--num:#d89b6a;--serif:Georgia,"Times New Roman",serif}
+:root{--coal:#17191b;--coal2:#222528;--bone:#f3f1ea;--bone2:#faf9f4;--ink:#212428;--ink2:#5d6167;--line:#ddd8cb;--pine:#0e6b5c;--pine-d:#0a4f44;--pine-t:#e4efec;--tape:#e8c547;--wa:#25D366;--serif:Georgia,"Times New Roman",serif}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:1rem;line-height:1.6}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bone);color:var(--ink);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
 a{color:inherit;text-decoration:none}
-ul{list-style:none}
+ul,ol{list-style:none}
+img,svg{max-width:100%;height:auto;display:block}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-:focus-visible{outline:3px solid var(--clay);outline-offset:3px;border-radius:2px}
-.skip{position:absolute;left:-999px;top:8px;background:var(--clay);color:#fff;padding:10px 16px;border-radius:6px;z-index:60}
+.serif{font-family:var(--serif)}
+:focus-visible{outline:3px solid var(--pine);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--pine);color:#fff;padding:10px 16px;border-radius:6px;z-index:80}
 .skip:focus{left:12px}
-/* ---------- nav ---------- */
-.site-head{position:sticky;top:0;z-index:40;background:rgba(246,241,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
-.brand small{display:block;font-weight:600;color:var(--ink-2);letter-spacing:.14em;font-size:.62rem;text-transform:uppercase}
-.mark{width:38px;height:38px;flex:none}
-.bar-cta{display:none;background:var(--clay);color:#fff;font-weight:700;padding:11px 18px;border-radius:999px;font-size:.9rem}
-.bar-cta:hover{background:var(--clay-d)}
-nav.links{display:none;gap:22px;font-size:.92rem;color:var(--ink-2);font-weight:600}
-nav.links a:hover{color:var(--clay)}
-@media(min-width:51.25em){.bar-cta{display:inline-block}nav.links{display:flex}}
-/* ---------- hero ---------- */
-.hero{padding:56px 0 30px;position:relative;overflow:hidden;display:block}
-.hero-grid{display:grid;gap:36px;align-items:center}
-@media(min-width:56.25em){.hero{padding:84px 0 48px}.hero-grid{grid-template-columns:1.05fr .95fr;gap:48px}}
-.kicker{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--clay-d);letter-spacing:.04em}
-.kicker svg{flex:none}
-h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.5rem,6.4vw,4.2rem);line-height:1.04;letter-spacing:-.01em;margin:18px 0 16px}
-h1 em{font-style:italic;color:var(--clay)}
-.lede{font-size:1.08rem;color:var(--ink-2);max-width:34em}
-.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;border-radius:999px;padding:15px 26px;font-size:1rem;min-height:48px;transition:transform .15s ease,background .15s ease}
-.btn:active{transform:scale(.98)}
-.btn-fill{background:var(--clay);color:#fff}
-.btn-fill:hover{background:var(--clay-d)}
-.btn-ghost{border:1.5px solid var(--line);background:#fff;color:var(--ink)}
-.btn-ghost:hover{border-color:var(--clay);color:var(--clay-d)}
-.trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:.85rem;color:var(--ink-2)}
-.trust b{color:var(--ink)}
-.trust span{display:inline-flex;align-items:center;gap:7px}
-/* material board */
-.board-wrap{position:relative}
-.board-wrap>.fallback{position:relative;z-index:1}
-.board{position:relative;border-radius:18px;overflow:hidden}
-.board-inner{position:relative;background:linear-gradient(160deg,hsl(36,33%,89%),hsl(35,33%,82%) 55%,hsl(33,30%,76%));border:1px solid var(--line);border-radius:18px;padding:22px;min-height:430px;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:96px;gap:12px}
-.swatch{border-radius:10px;position:relative;display:flex;align-items:flex-end;padding:10px;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(36,29,24,.75)}
-.swatch svg{position:absolute;inset:0;margin:auto;width:44%;height:44%;opacity:.5}
-.s1{grid-column:1/4;grid-row:1/3;background:hsl(27,38%,63%)}
-.s2{grid-column:4/7;grid-row:1/2;background:hsl(28,29%,42%);color:rgba(255,253,249,.85)}
-.s3{grid-column:4/6;grid-row:2/3;background:hsl(36,38%,77%)}
-.s4{grid-column:6/7;grid-row:2/4;background:hsl(28,24%,30%);color:rgba(255,253,249,.85)}
-.s5{grid-column:1/3;grid-row:3/4;background:hsl(38,40%,86%)}
-.s6{grid-column:3/6;grid-row:3/4;background:var(--clay);color:rgba(255,253,249,.9)}
-.s7{grid-column:1/4;grid-row:4/5;background:hsl(30,22%,51%);color:rgba(255,253,249,.85)}
-.s8{grid-column:4/7;grid-row:4/5;background:hsl(36,33%,89%)}
-.board-note{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(255,253,249,.95);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:.75rem;font-weight:700;color:var(--ink-2);white-space:nowrap;z-index:2}
-@media(max-width:35em){.board-inner{grid-auto-rows:72px;min-height:340px;padding:14px;gap:9px}.swatch{font-size:.6rem}}
-#gridOutput{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
-.board-hint{position:absolute;top:14px;right:14px;z-index:2;background:rgba(42,33,27,.78);color:var(--paper);font-size:.7rem;font-weight:700;letter-spacing:.05em;padding:6px 12px;border-radius:999px;display:none}
-@media(min-width:56.25em) and (pointer:fine){.board-hint{display:block}}
-/* ---------- sections ---------- */
-section{padding:64px 0}
-@media(min-width:56.25em){section{padding:88px 0}}
-.eyebrow{color:var(--clay);font-weight:800;letter-spacing:.18em;font-size:.75rem;text-transform:uppercase}
-h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.12;margin:10px 0 14px;letter-spacing:-.01em}
-.sub{color:var(--ink-2);max-width:38em}
-/* rooms */
-.rooms{display:grid;gap:16px;margin-top:34px}
-@media(min-width:40em){.rooms{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:60em){.rooms{grid-template-columns:repeat(4,1fr)}}
-.room{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px}
-.room svg{width:44px;height:44px;color:var(--clay)}
-.room h3{font-size:1.12rem;font-weight:800}
-.room p{font-size:.92rem;color:var(--ink-2)}
-.slot{margin-top:auto;border:1.5px dashed hsl(33,30%,71%);border-radius:10px;padding:12px;font-size:.8rem;color:var(--ink-2);background:hsl(38,40%,96%)}
-.slot b{color:var(--clay-d)}
+.sheet-tag{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--pine)}
+/* nav */
+.site-head{position:sticky;top:0;z-index:50;background:rgba(243,241,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;min-height:60px}
+.brand{display:flex;flex-direction:column;line-height:1.15}
+.brand b{font-family:var(--serif);font-size:19px;letter-spacing:.01em}
+.brand small{font-size:9.5px;letter-spacing:.2em;color:var(--ink2);text-transform:uppercase;font-weight:600}
+.calllink{font-size:14px;font-weight:700;color:var(--pine-d);padding:10px 4px;white-space:nowrap}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:13px 24px;border-radius:4px;font-weight:700;font-size:15px;border:1.5px solid transparent;cursor:pointer;transition:background .15s ease,color .15s ease,transform .15s ease}
+.btn:active{transform:translateY(1px)}
+.btn-pine{background:var(--pine);color:#fff}
+.btn-pine:hover{background:var(--pine-d)}
+.btn-ghost{border-color:var(--bone);color:var(--bone)}
+.btn-ghost:hover{background:var(--bone);color:var(--coal)}
+.btn-line{border-color:var(--ink);color:var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--bone)}
+/* hero */
+.hero{background:var(--coal);color:var(--bone);padding:64px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:1.04fr .96fr;gap:44px;align-items:center}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.6vw,62px);line-height:1.06;margin:16px 0 18px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--tape)}
+.hero .lede{font-size:17.5px;color:#c9c7bd;max-width:32em}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:26px 0 20px}
+.proof-strip{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13.5px;color:#b9b6aa}
+.proof-strip b{color:var(--bone)}
+.board{border:1.5px solid #3a3e42;border-radius:10px;background:var(--coal2);padding:14px;box-shadow:10px 10px 0 rgba(0,0,0,.25)}
+.board svg{width:100%;height:auto}
+.board-cap{display:flex;justify-content:space-between;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8b8d86;padding:10px 4px 2px}
+/* sections */
+section{padding:72px 0}
+.sec-head{max-width:42em;margin-bottom:34px}
+.sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(29px,4.2vw,44px);line-height:1.08;margin:12px 0 12px;letter-spacing:-.01em}
+.sec-head p{color:var(--ink2);font-size:16.5px}
+/* gallery */
+.gal-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px}
+.gal-nav{display:flex;gap:10px}
+.gal-nav button{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-size:19px;cursor:pointer;display:grid;place-items:center;transition:background .15s ease,color .15s ease}
+.gal-nav button:hover:not(:disabled){background:var(--ink);color:var(--bone)}
+.gal-nav button:disabled{opacity:.3;cursor:default}
+.gal{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gal::-webkit-scrollbar{display:none}
+.plate{flex:0 0 86%;scroll-snap-align:center;background:var(--bone2);border:1.5px solid var(--pine);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.plate svg{width:100%;height:auto;background:var(--bone);border:1px solid var(--line);border-radius:8px}
+.plate h3{font-family:var(--serif);font-weight:400;font-size:21px}
+.plate p{font-size:14.5px;color:var(--ink2)}
+.slot{border:1.5px dashed var(--pine);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--pine-d);background:var(--pine-t)}
+@media(min-width:760px){.plate{flex:0 0 46%}}
+/* services ledger */
+.ledger{border-top:1.5px solid var(--ink)}
+.lrow{display:grid;grid-template-columns:70px 1fr 200px;gap:18px;align-items:start;padding:24px 0;border-bottom:1.5px solid var(--line)}
+.lrow .num{font-family:var(--serif);font-size:30px;color:var(--pine);line-height:1}
+.lrow h3{font-family:var(--serif);font-weight:400;font-size:23px;margin-bottom:6px}
+.lrow p{font-size:15px;color:var(--ink2);max-width:36em}
+.lrow .slot{justify-self:end;min-width:190px}
 /* process */
-.process{background:var(--deep);color:hsl(33,22%,73%)}
-.process h2{color:var(--paper)}
-.process .sub{color:hsl(33,22%,73%)}
-.steps{display:grid;gap:14px;margin-top:34px;counter-reset:st}
-@media(min-width:45em){.steps{grid-template-columns:repeat(4,1fr)}}
-.step{background:rgba(255,253,249,.05);border:1px solid rgba(246,241,234,.14);border-radius:14px;padding:22px}
-.step::before{counter-increment:st;content:"0" counter(st);font-family:var(--serif);font-size:1.6rem;color:var(--num)}
-.step h3{font-size:1.05rem;margin:8px 0 6px;color:var(--paper)}
-.step p{font-size:.9rem;color:hsl(33,22%,73%)}
-/* quote */
-.quote{background:linear-gradient(160deg,hsl(36,33%,89%),hsl(35,33%,82%))}
-.quote-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;display:grid;gap:26px}
-@media(min-width:53.75em){.quote-card{grid-template-columns:1fr 1fr;align-items:start;padding:40px}}
-.quote-card h2{margin-top:6px}
-.checks li{display:flex;gap:10px;padding:8px 0;font-size:.95rem;border-bottom:1px solid var(--line)}
-.checks li:last-child{border-bottom:0}
-.checks svg{flex:none;margin-top:3px;color:var(--clay)}
-.quote-actions{display:flex;align-items:center;gap:16px;margin-top:18px}
-.wa-circle{width:56px;height:56px;flex:none;border-radius:50%;background:var(--wa);display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(36,29,24,.22);transition:background .15s ease,transform .15s ease}
-.wa-circle:hover{background:var(--wa-d)}
-.wa-circle:active{transform:scale(.96)}
-.quote-call{display:flex;flex-direction:column;gap:2px;font-size:.85rem;color:var(--ink-2)}
-.quote-call a{font-weight:800;color:var(--ink);font-size:1.1rem;white-space:nowrap}
+.process{background:var(--bone2);border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
+.steps{max-width:760px}
+.step{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:20px 0;position:relative}
+.step .dot{width:44px;height:44px;border-radius:50%;background:var(--pine);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px}
+.step h3{font-family:var(--serif);font-weight:400;font-size:21px;margin:8px 0 6px}
+.step p{font-size:15px;color:var(--ink2)}
+.step:not(:last-child)::after{content:"";position:absolute;left:21px;top:68px;bottom:-8px;width:2px;background:var(--line)}
+/* proof */
+.proof{background:var(--coal);color:var(--bone)}
+.proof .sheet-tag{color:var(--tape)}
+.big-rating{display:flex;flex-wrap:wrap;align-items:center;gap:14px 30px;margin-bottom:26px}
+.big-rating .n{font-family:var(--serif);font-size:clamp(72px,12vw,124px);line-height:.9;color:var(--tape)}
+.big-rating .m{font-size:15.5px;color:#c9c7bd;max-width:24em}
+.big-rating .m b{color:var(--bone)}
+.themes{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
+.theme{font-size:13px;font-weight:600;border:1px solid #3a3e42;background:var(--coal2);border-radius:999px;padding:8px 14px}
+.theme b{color:var(--tape)}
+.proof .slot{border-color:var(--tape);color:#efe0a8;background:rgba(232,197,71,.07)}
 /* visit */
-.visit-grid{display:grid;gap:16px;margin-top:34px}
-@media(min-width:53.75em){.visit-grid{grid-template-columns:1.1fr .9fr}}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px}
-.panel h3{font-size:1.15rem;margin-bottom:12px}
-.fact{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.95rem;align-items:flex-start}
-.fact:last-child{border-bottom:0}
-.fact svg{flex:none;margin-top:2px;color:var(--clay)}
-.map-slot{border:1.5px dashed hsl(33,30%,71%);border-radius:10px;padding:26px 18px;text-align:center;font-size:.85rem;color:var(--ink-2);background:hsl(38,40%,96%);margin-top:14px}
-.hours{width:100%;font-size:.92rem;border-collapse:collapse}
-.hours td{padding:7px 0;border-bottom:1px solid var(--line)}
-.hours td:last-child{text-align:right;font-weight:700}
+.visit .wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{background:var(--bone2);border:1.5px solid var(--line);border-radius:12px;padding:26px}
+.panel h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:14px}
+.kv{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+.kv b{font-weight:700}
+.kv span{color:var(--ink2);text-align:right}
+.panel .btn{margin-top:16px}
+/* quote */
+.quote{background:var(--pine-t)}
+.quote .wrap{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+.qform{background:var(--bone2);border:1.5px solid var(--pine);border-radius:12px;padding:26px;display:grid;gap:14px;box-shadow:10px 10px 0 rgba(14,107,92,.12)}
+.qform label{font-size:13px;font-weight:700;letter-spacing:.03em}
+.qform input,.qform select,.qform textarea{width:100%;font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.qform textarea{min-height:96px;resize:vertical}
+.qnote{font-size:12.5px;color:var(--ink2)}
+.qside .btn{margin:18px 0 12px}
 /* footer */
-footer{background:var(--deep);color:hsl(33,22%,73%);padding:34px 0;font-size:.85rem}
-.foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
-.foot b{color:var(--paper)}
-/* fab */
-.fab{position:fixed;right:16px;bottom:16px;z-index:50;width:56px;height:56px;display:inline-flex;align-items:center;justify-content:center;background:var(--wa);border-radius:50%;box-shadow:0 10px 26px rgba(36,29,24,.32);transition:background .15s ease,transform .15s ease}
-.fab:hover{background:var(--wa-d)}
-.fab:active{transform:scale(.94)}
-/* motion */
-.js .reveal{opacity:0;transform:translateY(22px)}
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  .reveal{opacity:1;transform:none;transition:none}
-  *{animation:none!important;transition:none!important}
-}
+footer{background:var(--coal);color:#b9b6aa;padding:44px 0 130px;font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between}
+footer b{color:var(--bone);font-family:var(--serif);font-size:17px;font-weight:400}
+footer a{color:var(--bone)}
+/* floating WhatsApp — the one official control */
+.wa-fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:70;width:56px;height:56px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.28);transition:transform .15s ease,background .15s ease}
+.wa-fab:hover{background:#1fbf5a;transform:translateY(-2px)}
+.wa-fab svg{width:30px;height:30px;fill:#fff}
+/* responsive */
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.visit .wrap{grid-template-columns:1fr}.quote .wrap{grid-template-columns:1fr}.lrow{grid-template-columns:56px 1fr}.lrow .slot{grid-column:2;justify-self:start;min-width:0}}
+@media(max-width:520px){.plate{flex:0 0 92%}.cta-row .btn{width:100%}.gal-nav{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<script>document.documentElement.className+=" js";</script>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="site-head">
   <div class="wrap bar">
-    <a class="brand" href="#top" aria-label="Interior Design Raj Nagar Extension — home">
-      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="9" fill="#b4552d"/><path d="M11 27V13l9 8 9-8v14" stroke="#f6f1ea" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Interior Design RNE<small>Raj Nagar Extension · Ghaziabad</small></span>
-    </a>
-    <nav class="links" aria-label="Sections">
-      <a href="#work">Rooms we design</a>
-      <a href="#process">How it works</a>
-      <a href="#quote">Get a quote</a>
-      <a href="#visit">Visit us</a>
-    </nav>
-    <a class="bar-cta" href="#quote">Get a Quote</a>
+    <a class="brand" href="#top" aria-label="Interior Design Raj Nagar Extension — home"><b>Interior Design</b><small>Raj Nagar Extension · Ghaziabad</small></a>
+    <a class="calllink" href="tel:+918448294656">Call +91 84482 94656</a>
   </div>
 </header>
 
 <main id="main">
 <!-- HERO -->
-<header class="hero" id="top">
-  <div class="wrap hero-grid">
+<section class="hero" id="top">
+  <div class="wrap">
     <div>
-      <span class="kicker"><svg width="14" height="14" viewBox="0 0 24 24" fill="#e8a33d" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>5.0 rating · 57 Google reviews · Raj Nagar Extension</span>
-      <h1>Interiors built around <em>the way your family lives.</em></h1>
-      <p class="lede">Home interiors, modular kitchens and wardrobes designed, finished and installed by one team in Raj Nagar Extension — so nothing gets lost between drawing and handover.</p>
+      <p class="sheet-tag" style="color:var(--tape)">Raj Nagar Extension · Ghaziabad</p>
+      <h1>Raj Nagar Extension interiors, rated <em>5.0</em> by the people who live with the work.</h1>
+      <p class="lede">Modular kitchens, wardrobes and full-home interiors — see finished work room by room, then send your floor plan for a quote in one message.</p>
       <div class="cta-row">
-        <a class="btn btn-fill" href="#quote">Get a quote</a>
-        <a class="btn btn-ghost" href="#work">See what we design</a>
+        <a class="btn btn-pine" href="#quote">Get a project quote</a>
+        <a class="btn btn-ghost" href="#work">See the work</a>
       </div>
-      <div class="trust">
-        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="#b4552d" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><b>5.0</b>&nbsp;from <b>57</b>&nbsp;Google reviews</span>
-        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#b4552d" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Shop 45, Ashiana Palm Court</span>
-        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#b4552d" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Listing open 24 hours</span>
-      </div>
+      <p class="proof-strip"><span><b>5.0★</b> across <b>57</b> Google reviews</span><span>Shop 45, Ashiana Palm Court</span><span>Open 24 hours · per Google listing</span></p>
     </div>
-    <div class="board-wrap">
-      <div class="fallback">
-        <div class="board">
-          <div class="board-inner" id="gridContent" aria-label="Material and finish board illustration">
-            <div class="swatch s1">Oak laminate<svg viewBox="0 0 60 60" fill="none" aria-hidden="true"><path d="M8 44 30 14l22 30" stroke="hsl(28,24%,30%)" stroke-width="2.4" stroke-linecap="round"/></svg></div>
-            <div class="swatch s2">Walnut wardrobe</div>
-            <div class="swatch s3">Ivory wall finish</div>
-            <div class="swatch s4">Charcoal handle</div>
-            <div class="swatch s5">Linen texture</div>
-            <div class="swatch s6">Terracotta accent</div>
-            <div class="swatch s7">Brass detail</div>
-            <div class="swatch s8">Stone-look tile<svg viewBox="0 0 60 60" fill="none" aria-hidden="true"><rect x="10" y="10" width="18" height="18" rx="2" stroke="hsl(28,29%,42%)" stroke-width="2.2"/><rect x="32" y="10" width="18" height="18" rx="2" stroke="hsl(28,29%,42%)" stroke-width="2.2"/><rect x="10" y="32" width="18" height="18" rx="2" stroke="hsl(28,29%,42%)" stroke-width="2.2"/><rect x="32" y="32" width="18" height="18" rx="2" stroke="hsl(28,29%,42%)" stroke-width="2.2"/></svg></div>
-            <span class="board-note">Material &amp; finish board — [Add real project photos]</span>
-          </div>
-          <span class="board-hint" aria-hidden="true">Move your cursor — the board is alive</span>
-          <canvas id="gridOutput" aria-hidden="true"></canvas>
-        </div>
-      </div>
+    <div class="board" role="img" aria-label="Site board showing a line-drawn floor plan of a three-room home with dimension marks">
+      <svg viewBox="0 0 520 420" font-family="ui-monospace,Menlo,monospace">
+        <g stroke="#f3f1ea" stroke-width="2" fill="none">
+          <rect x="40" y="34" width="440" height="330"/>
+          <line x1="300" y1="34" x2="300" y2="240"/>
+          <line x1="300" y1="240" x2="480" y2="240"/>
+          <line x1="300" y1="240" x2="300" y2="364"/>
+          <path d="M300 120a34 34 0 0 1 34 34" stroke-width="1.4"/>
+          <path d="M180 364a30 30 0 0 1 30-30" stroke-width="1.4"/>
+        </g>
+        <g fill="#f3f1ea" font-size="12" letter-spacing="2">
+          <text x="70" y="200">LIVING</text>
+          <text x="330" y="90">KITCHEN</text>
+          <text x="330" y="310">BED</text>
+        </g>
+        <g stroke="#e8c547" stroke-width="1.6" fill="none">
+          <line x1="40" y1="392" x2="480" y2="392"/>
+          <path d="M40 386v12M480 386v12"/>
+        </g>
+        <text x="236" y="384" fill="#e8c547" font-size="12">6.4 M</text>
+        <g stroke="#e8c547" stroke-width="1.6" fill="none">
+          <circle cx="474" cy="70" r="16"/>
+          <path d="M474 82V60M474 60l-6 8M474 60l6 8"/>
+        </g>
+        <g fill="#8b8d86" font-size="10" letter-spacing="1.5">
+          <text x="44" y="414">INTERIOR DESIGN · RNE</text>
+          <text x="420" y="414">PLAN 01 · 1:100</text>
+        </g>
+      </svg>
+      <div class="board-cap"><span>Site board</span><span>Plan 01</span></div>
     </div>
   </div>
-</header>
+</section>
 
-<!-- ROOMS -->
+<!-- WORK -->
 <section id="work">
   <div class="wrap">
-    <p class="eyebrow reveal">Rooms we design</p>
-    <h2 class="reveal">Every room planned around storage, light and daily routine.</h2>
-    <p class="sub reveal">From a single wardrobe to a full 3BHK, each scope gets its own drawings, material list and installation plan — agreed before work begins.</p>
-    <div class="rooms">
-      <article class="room reveal">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="6" width="32" height="36" rx="2"/><path d="M24 6v36M18 22h2M28 22h2M14 42v3M34 42v3"/></svg>
-        <h3>Wardrobes &amp; Storage</h3>
-        <p>Fitted wardrobes and almira units planned to your actual clothes, lofts included.</p>
-        <div class="slot"><b>[Add wardrobe project photos]</b></div>
-      </article>
-      <article class="room reveal">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="7" y="8" width="34" height="14" rx="2"/><path d="M7 15h34M14 11.5h6M14 18.5h6M10 22v18M38 22v18M10 30h28"/></svg>
-        <h3>Modular Kitchens</h3>
-        <p>Kitchen layouts that keep the wet area, tall units and work triangle in order.</p>
-        <div class="slot"><b>[Add modular kitchen photos]</b></div>
-      </article>
-      <article class="room reveal">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 40V22l16-12 16 12v18"/><path d="M16 40V28h16v12M20 33h3M27 33h3"/></svg>
-        <h3>Full-Home Interiors</h3>
-        <p>Living, bedrooms and passages finished as one consistent palette and plan.</p>
-        <div class="slot"><b>[Add full-home project photos]</b></div>
-      </article>
-      <article class="room reveal">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="10" width="32" height="24" rx="2"/><path d="M16 40h16M24 34v6M14 18l4 4 6-6 5 5 5-4"/></svg>
-        <h3>Renovation &amp; Upgrades</h3>
-        <p>Room-by-room refreshes for homes that need new finishing, not a full rebuild.</p>
-        <div class="slot"><b>[Add renovation before/after photos]</b></div>
-      </article>
+    <div class="gal-head">
+      <div class="sec-head" style="margin-bottom:0">
+        <p class="sheet-tag">Sheet 01 · Selected work</p>
+        <h2>See finished work, room by room.</h2>
+        <p>Swipe or drag through the plates. Each one holds the kind of completed work clients rate five stars — real project photos slot straight in.</p>
+      </div>
+      <div class="gal-nav">
+        <button id="galPrev" aria-label="Previous project plate" aria-controls="gal">←</button>
+        <button id="galNext" aria-label="Next project plate" aria-controls="gal">→</button>
+      </div>
+    </div>
+    <div class="gal" id="gal" role="region" aria-label="Selected work gallery — scrolls horizontally" tabindex="0">
+      <figure class="plate">
+        <svg viewBox="0 0 400 260" role="img" aria-label="Line drawing of a modular kitchen with base cabinets, wall units and hob" font-family="ui-monospace,Menlo,monospace">
+          <g stroke="#0e6b5c" stroke-width="2" fill="none">
+            <line x1="24" y1="150" x2="376" y2="150"/>
+            <rect x="30" y="150" width="180" height="60"/>
+            <line x1="90" y1="150" x2="90" y2="210"/><line x1="150" y1="150" x2="150" y2="210"/>
+            <rect x="30" y="44" width="130" height="48"/><rect x="196" y="44" width="90" height="48"/>
+            <path d="M310 44h56l-10 34h-36z"/>
+            <circle cx="322" cy="138" r="9"/><circle cx="348" cy="138" r="9"/>
+            <rect x="60" y="140" width="44" height="10"/>
+            <line x1="24" y1="210" x2="376" y2="210"/>
+          </g>
+          <g stroke="#e8c547" stroke-width="1.6" fill="none"><line x1="30" y1="234" x2="210" y2="234"/><path d="M30 229v10M210 229v10"/></g>
+          <text x="96" y="252" fill="#0e6b5c" font-size="11">2.4 M RUN</text>
+        </svg>
+        <div><h3>Modular kitchens</h3><p>The most-reviewed work on the listing — layouts, storage and finishing that hold up to daily use.</p></div>
+        <div class="slot">[Add 2–3 real kitchen project photos]</div>
+      </figure>
+      <figure class="plate">
+        <svg viewBox="0 0 400 260" role="img" aria-label="Line drawing of a floor-to-ceiling wardrobe with loft and mirror panel" font-family="ui-monospace,Menlo,monospace">
+          <g stroke="#0e6b5c" stroke-width="2" fill="none">
+            <rect x="70" y="30" width="260" height="196"/>
+            <line x1="200" y1="30" x2="200" y2="226"/>
+            <line x1="70" y1="78" x2="330" y2="78"/>
+            <rect x="186" y="120" width="8" height="26" rx="3"/><rect x="206" y="120" width="8" height="26" rx="3"/>
+            <rect x="226" y="94" width="88" height="116"/>
+            <line x1="226" y1="94" x2="314" y2="210"/>
+          </g>
+          <g stroke="#e8c547" stroke-width="1.6" fill="none"><line x1="352" y1="30" x2="352" y2="226"/><path d="M347 30h10M347 226h10"/></g>
+          <text x="360" y="132" fill="#0e6b5c" font-size="11" transform="rotate(90 360 132)">2.4 M</text>
+        </svg>
+        <div><h3>Wardrobes &amp; storage</h3><p>Floor-to-ceiling almari and wardrobe work built to the room's exact measurements.</p></div>
+        <div class="slot">[Add real wardrobe project photos]</div>
+      </figure>
+      <figure class="plate">
+        <svg viewBox="0 0 400 260" role="img" aria-label="Line drawing of a living room with sofa, TV unit and rug" font-family="ui-monospace,Menlo,monospace">
+          <g stroke="#0e6b5c" stroke-width="2" fill="none">
+            <rect x="264" y="52" width="100" height="58"/>
+            <line x1="274" y1="150" x2="354" y2="150"/><line x1="268" y1="150" x2="268" y2="182"/><line x1="360" y1="150" x2="360" y2="182"/>
+            <path d="M60 128h150a14 14 0 0 1 14 14v40H60z"/>
+            <path d="M60 128v-16a10 10 0 0 1 10-10h130a10 10 0 0 1 10 10v16"/>
+            <line x1="110" y1="112" x2="110" y2="128"/><line x1="160" y1="112" x2="160" y2="128"/>
+            <rect x="52" y="196" width="220" height="34" stroke-dasharray="6 5"/>
+          </g>
+          <g stroke="#e8c547" stroke-width="1.6" fill="none"><line x1="52" y1="244" x2="272" y2="244"/><path d="M52 239v10M272 239v10"/></g>
+          <text x="130" y="258" fill="#0e6b5c" font-size="11">LIVING WALL</text>
+        </svg>
+        <div><h3>Living rooms</h3><p>Seating, TV walls and lighting planned around how the family actually uses the room.</p></div>
+        <div class="slot">[Add real living-room project photos]</div>
+      </figure>
+      <figure class="plate">
+        <svg viewBox="0 0 400 260" role="img" aria-label="Line drawing of a bedroom with bed, side tables and panel wall" font-family="ui-monospace,Menlo,monospace">
+          <g stroke="#0e6b5c" stroke-width="2" fill="none">
+            <line x1="40" y1="40" x2="40" y2="220"/><line x1="64" y1="40" x2="64" y2="220"/>
+            <rect x="110" y="96" width="180" height="110"/>
+            <rect x="120" y="106" width="76" height="30" rx="4"/><rect x="204" y="106" width="76" height="30" rx="4"/>
+            <line x1="110" y1="156" x2="290" y2="156"/>
+            <rect x="70" y="150" width="30" height="42"/><rect x="300" y="150" width="30" height="42"/>
+            <circle cx="85" cy="140" r="7"/><circle cx="315" cy="140" r="7"/>
+          </g>
+          <g stroke="#e8c547" stroke-width="1.6" fill="none"><line x1="110" y1="230" x2="290" y2="230"/><path d="M110 225v10M290 225v10"/></g>
+          <text x="168" y="248" fill="#0e6b5c" font-size="11">BEDROOM SET</text>
+        </svg>
+        <div><h3>Bedrooms</h3><p>Beds, panel walls and storage that make small Raj Nagar rooms feel considered, not crowded.</p></div>
+        <div class="slot">[Add real bedroom project photos]</div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sheet-tag">Sheet 02 · Services</p>
+      <h2>Kitchens, wardrobes and everything between.</h2>
+      <p>One interior designer handling the whole home — so measurements, materials and finishing stay consistent from the first room to the last.</p>
+    </div>
+    <div class="ledger">
+      <div class="lrow reveal">
+        <span class="num" aria-hidden="true">01</span>
+        <div><h3>Modular kitchens</h3><p>Layouts, cabinets, counters and hardware — the work clients mention most in reviews.</p></div>
+        <div class="slot">[Add final service details]</div>
+      </div>
+      <div class="lrow reveal">
+        <span class="num" aria-hidden="true">02</span>
+        <div><h3>Wardrobes &amp; almari</h3><p>Made-to-measure wardrobes and storage, including lofts, mirrors and sliding options.</p></div>
+        <div class="slot">[Add final service details]</div>
+      </div>
+      <div class="lrow reveal">
+        <span class="num" aria-hidden="true">03</span>
+        <div><h3>Full-home interiors</h3><p>Room-wise design and execution for homes across Raj Nagar Extension and nearby Ghaziabad.</p></div>
+        <div class="slot">[Add final service details]</div>
+      </div>
+      <div class="lrow reveal">
+        <span class="num" aria-hidden="true">04</span>
+        <div><h3>Finishing &amp; detailing</h3><p>The finishing pass clients specifically call out in five-star reviews.</p></div>
+        <div class="slot">[Add final service details]</div>
+      </div>
     </div>
   </div>
 </section>
@@ -236,149 +314,148 @@ footer{background:var(--deep);color:hsl(33,22%,73%);padding:34px 0;font-size:.85
 <!-- PROCESS -->
 <section class="process" id="process">
   <div class="wrap">
-    <p class="eyebrow reveal">How it works</p>
-    <h2 class="reveal">Four clear steps from first message to finished home.</h2>
-    <p class="sub reveal">You always know what happens next — and what the quotation covers — before each stage begins.</p>
-    <div class="steps">
-      <div class="step reveal"><h3>Share your plan</h3><p>Send your floor plan or room sizes, and tell us what is not working today.</p></div>
-      <div class="step reveal"><h3>Site visit &amp; layout</h3><p>We measure, discuss storage and finishes, and shortlist layouts for your rooms.</p></div>
-      <div class="step reveal"><h3>Design &amp; quote</h3><p>You see the design direction with materials, then a clear scope-based quotation.</p></div>
-      <div class="step reveal"><h3>Execution &amp; handover</h3><p>Work runs to schedule with finishing checks, and ends with a proper handover.</p></div>
+    <div class="sec-head">
+      <p class="sheet-tag">Sheet 03 · Process</p>
+      <h2>From floor plan to finished home.</h2>
+      <p>Four steps, and you know where the project stands at each one.</p>
     </div>
-    <div class="cta-row reveal"><a class="btn btn-fill" href="#quote">Tell us about your project</a></div>
+    <ol class="steps">
+      <li class="step reveal"><span class="dot" aria-hidden="true">1</span><div><h3>Send your space</h3><p>Message your floor plan or a few room photos, and say which rooms to start with.</p></div></li>
+      <li class="step reveal"><span class="dot" aria-hidden="true">2</span><div><h3>Visit &amp; measurement</h3><p>The space is measured in person and the work is discussed face to face at your home.</p></div></li>
+      <li class="step reveal"><span class="dot" aria-hidden="true">3</span><div><h3>Design &amp; estimate</h3><p>You see the design direction and a clear written estimate before any work begins.</p><div class="slot" style="margin-top:10px">[Add final pricing / quote-process details]</div></div></li>
+      <li class="step reveal"><span class="dot" aria-hidden="true">4</span><div><h3>Build &amp; handover</h3><p>Work runs to the agreed plan and finishes with a room-by-room handover.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof" id="proof">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sheet-tag">Sheet 04 · Proof</p>
+      <h2>Every review, five stars.</h2>
+      <p>Themes below come straight from the public Google listing.</p>
+    </div>
+    <div class="big-rating">
+      <span class="n" aria-hidden="true">5.0</span>
+      <p class="m"><b>5.0 out of 5</b> across <b>57 Google reviews</b> — every single one five-star, per the listing's rating distribution.</p>
+    </div>
+    <div class="themes" aria-label="Themes from public Google reviews">
+      <span class="theme">kitchen <b>×8</b></span>
+      <span class="theme">finishing <b>×3</b></span>
+      <span class="theme">home <b>×2</b></span>
+    </div>
+    <div class="slot">[Add real Google review quotes — screenshot cards or excerpts]</div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="wrap">
+    <div class="panel reveal">
+      <h3>Find us in Ashiana Palm Court</h3>
+      <div class="kv"><b>Address</b><span>Shop 45, Ashiana Palm Court, Raj Nagar Extension, Ghaziabad, Uttar Pradesh 201003</span></div>
+      <div class="kv"><b>Phone</b><span><a href="tel:+918448294656">+91 84482 94656</a></span></div>
+      <div class="kv"><b>Hours</b><span>Open 24 hours · per Google listing</span></div>
+      <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&amp;query=Interior%20Design%20Raj%20Nagar%20Extension%20Ghaziabad&amp;query_place_id=ChIJdd2r0FLxDDkRYWQAjucSN3g" target="_blank" rel="noopener">Open in Google Maps</a>
+    </div>
+    <div class="panel reveal">
+      <h3>Coverage</h3>
+      <div class="kv"><b>Home base</b><span>Raj Nagar Extension</span></div>
+      <div class="kv"><b>Also serving</b><span>Ghaziabad &amp; nearby</span></div>
+      <div class="slot" style="margin-top:16px">[Add Google Maps embed]</div>
+      <div class="slot" style="margin-top:10px">[Add founder / studio story]</div>
+    </div>
   </div>
 </section>
 
 <!-- QUOTE -->
 <section class="quote" id="quote">
-  <div class="wrap quote-card">
-    <div>
-      <p class="eyebrow reveal">Get a quote</p>
-      <h2 class="reveal">Tell us about your home. Get a clear quote.</h2>
-      <p class="sub reveal">One message is enough to start. Share your rooms, your timeline and what you want changed — we reply with the next step, not a sales pitch.</p>
-      <div class="quote-actions">
-        <a class="wa-circle" href="https://wa.me/918448294656?text=Hi%2C%20I%20want%20a%20quote%20for%20home%20interiors%20in%20Raj%20Nagar%20Extension.%20My%20rooms%3A%20" aria-label="Chat on WhatsApp">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.7.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.8l.4-.5c.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.9.9-1.1 2.2-.2 3.8a12 12 0 0 0 4.6 4.3c1.7.9 2.9.8 3.9.5.6-.2 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.2-.1z"/></svg>
-        </a>
-        <div class="quote-call">
-          <a href="tel:+918448294656">+91 84482 94656</a>
-          <span>Call the studio directly</span>
-        </div>
-      </div>
-      <div class="slot reveal" style="margin-top:18px"><b>[Add enquiry form or final quote details]</b></div>
-    </div>
-    <ul class="checks reveal">
-      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Message any time — the listing is open 24 hours</li>
-      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Site visit in Raj Nagar Extension and nearby colonies</li>
-      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Scope-based quotation — itemised, not a lump sum</li>
-      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>One team for design, material and installation</li>
-      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>Rated 5.0 across 57 Google reviews</li>
-    </ul>
-  </div>
-</section>
-
-<!-- VISIT -->
-<section id="visit">
   <div class="wrap">
-    <p class="eyebrow reveal">Visit or call</p>
-    <h2 class="reveal">Meet the studio at Ashiana Palm Court.</h2>
-    <div class="visit-grid">
-      <div class="panel reveal">
-        <h3>Studio address</h3>
-        <div class="fact"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span>Shop number 45, Ashiana Palm Court, Raj Nagar Extension, Ghaziabad, Uttar Pradesh 201003</span></div>
-        <div class="fact"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span><a href="tel:+918448294656">+91 84482 94656</a> — call or message</span></div>
-        <div class="map-slot">[Add Google Maps embed]</div>
-      </div>
-      <div class="panel reveal">
-        <h3>Opening hours</h3>
-        <table class="hours">
-          <tr><td>Monday</td><td>Open 24 hours</td></tr>
-          <tr><td>Tuesday</td><td>Open 24 hours</td></tr>
-          <tr><td>Wednesday</td><td>Open 24 hours</td></tr>
-          <tr><td>Thursday</td><td>Open 24 hours</td></tr>
-          <tr><td>Friday</td><td>Open 24 hours</td></tr>
-          <tr><td>Saturday</td><td>Open 24 hours</td></tr>
-          <tr><td>Sunday</td><td>Open 24 hours</td></tr>
-        </table>
-        <div class="slot" style="margin-top:14px"><b>[Add studio story &amp; completed-project gallery]</b></div>
-      </div>
+    <div class="qside">
+      <p class="sheet-tag">Sheet 05 · Quote</p>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(29px,4.2vw,44px);line-height:1.08;margin:12px 0 12px">Get your project quote.</h2>
+      <p style="color:var(--ink2)">Write your brief once — it opens in your messaging app, ready to send. Prefer talking? Call <a href="tel:+918448294656" style="font-weight:700;text-decoration:underline">+91 84482 94656</a>.</p>
+      <div class="slot" style="margin-top:16px">[Add exact FAQs — timelines, materials, payment terms]</div>
     </div>
+    <form class="qform" id="quoteForm">
+      <div><label for="fName">Your name</label><input id="fName" name="name" type="text" autocomplete="name" placeholder="e.g. Rohit Sharma" required></div>
+      <div><label for="fService">What do you need?</label>
+        <select id="fService" name="service">
+          <option>Full-home interiors</option>
+          <option>Modular kitchen</option>
+          <option>Wardrobes &amp; storage</option>
+          <option>Not sure yet — advise me</option>
+        </select>
+      </div>
+      <div><label for="fMsg">About your space</label><textarea id="fMsg" name="msg" placeholder="e.g. 3BHK in Raj Nagar Extension, need kitchen and two wardrobes…"></textarea></div>
+      <button class="btn btn-pine" type="submit">Send my brief</button>
+      <p class="qnote">Opens your messaging app with the brief pre-filled — nothing is stored on this page.</p>
+    </form>
   </div>
 </section>
 </main>
 
 <footer>
-  <div class="wrap foot">
-    <span><b>Interior Design RNE</b> · Raj Nagar Extension, Ghaziabad</span>
-    <span><a href="tel:+918448294656">+91 84482 94656</a></span>
+  <div class="wrap">
+    <div><b>Interior Design</b><br>Raj Nagar Extension, Ghaziabad<br>Shop 45, Ashiana Palm Court · 201003</div>
+    <div><a href="tel:+918448294656">+91 84482 94656</a><br><span>Open 24 hours · per Google listing</span></div>
+    <div style="align-self:flex-end">© 2026 Interior Design, Raj Nagar Extension</div>
   </div>
 </footer>
 
-<a class="fab" href="https://wa.me/918448294656?text=Hi%2C%20I%20want%20a%20quote%20for%20home%20interiors%20in%20Raj%20Nagar%20Extension." aria-label="Chat on WhatsApp">
-  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.7.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.8l.4-.5c.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.9.9-1.1 2.2-.2 3.8a12 12 0 0 0 4.6 4.3c1.7.9 2.9.8 3.9.5.6-.2 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.2-.1z"/></svg>
+<!-- The single official WhatsApp control -->
+<a class="wa-fab" href="https://wa.me/918448294656" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 </a>
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Interior Design Raj Nagar Extension Ghaziabad","telephone":"+918448294656","address":{"@type":"PostalAddress","streetAddress":"Shop number 45, Ashiana Palm Court, Raj Nagar Extension","addressLocality":"Ghaziabad","addressRegion":"Uttar Pradesh","postalCode":"201003","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":28.7029351,"longitude":77.4320731},"openingHours":"Mo-Su 00:00-23:59","aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"57"},"url":"https://sharpsites-demo.github.io/raj-nagar-interiors-demo/"}
-</script>
 
 <script>
 (function(){
-  "use strict";
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* Canvas UI Grid — WebGL vanilla build (canvasui.dev, MIT + Commons Clause).
-     Falls back to the plain material board when html-in-canvas or WebGL2 is unavailable. */
-  function initGrid(){
-    var content = document.getElementById("gridContent");
-    var output = document.getElementById("gridOutput");
-    var hint = document.querySelector(".board-hint");
-    function plainBoard(){ if(hint) hint.remove(); if(output) output.remove(); }
-    if(!content || !output || !window.CanvasGrid){ plainBoard(); return; }
-    if(reduced || !window.CanvasGrid.supportsHtmlInCanvas()){ plainBoard(); return; }
-    var source = document.createElement("canvas");
-    source.setAttribute("layoutsubtree","true");
-    source.style.cssText = "position:absolute;inset:0;width:100%;height:100%;";
-    var board = output.parentNode;
-    board.insertBefore(source, output);
-    var inner = content.parentNode;
-    inner.removeChild(content);
-    source.appendChild(content);
-    var inst = window.CanvasGrid.createGrid(
-      { source: source, content: content, output: output },
-      { tileSize: 130, amplitude: 1.6, waveSpeed: 0.55, frequency: 10,
-        liftHeight: 34, tilt: 0.7, tint: [0.7,0.33,0.18], tintStrength: 0.14,
-        idleRipples: 4, shading: 0.06 }
-    );
-    if(!inst){
-      /* graceful fallback: restore the plain board */
-      source.parentNode.removeChild(source);
-      board.insertBefore(content, output);
-      plainBoard();
-    }
+  var gal = document.getElementById('gal');
+  var prev = document.getElementById('galPrev');
+  var next = document.getElementById('galNext');
+  function step(){ var p = gal.querySelector('.plate'); return p ? p.getBoundingClientRect().width + 16 : 320; }
+  function update(){
+    var max = gal.scrollWidth - gal.clientWidth - 2;
+    prev.disabled = gal.scrollLeft <= 2;
+    next.disabled = gal.scrollLeft >= max;
   }
-  if(document.readyState !== "loading") initGrid();
-  else document.addEventListener("DOMContentLoaded", initGrid);
+  prev.addEventListener('click', function(){ gal.scrollBy({left:-step(), behavior:'smooth'}); });
+  next.addEventListener('click', function(){ gal.scrollBy({left:step(), behavior:'smooth'}); });
+  gal.addEventListener('scroll', update, {passive:true});
+  gal.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); gal.scrollBy({left:-step(), behavior:'smooth'}); }
+    if(e.key === 'ArrowRight'){ e.preventDefault(); gal.scrollBy({left:step(), behavior:'smooth'}); }
+  });
+  window.addEventListener('resize', update);
+  update();
 
-  /* GSAP entrance motion */
-  window.addEventListener("DOMContentLoaded", function(){
-    if(reduced || !window.gsap){ if(!window.gsap){document.documentElement.className = document.documentElement.className.replace(" js","");} return; }
-    if(window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-    gsap.from("h1", {opacity:0, y:26, duration:.8, ease:"power3.out", delay:.1});
-    gsap.from(".hero .lede, .hero .cta-row, .hero .kicker", {opacity:0, y:18, duration:.7, stagger:.08, ease:"power2.out", delay:.25});
-    gsap.from(".board-wrap", {opacity:0, y:30, duration:.9, ease:"power3.out", delay:.35});
-    if(window.ScrollTrigger){
-      gsap.utils.toArray(".reveal").forEach(function(el){
-        gsap.to(el, {opacity:1, y:0, duration:.7, ease:"power2.out",
-          scrollTrigger:{trigger:el, start:"top 86%", once:true}});
-      });
-    } else {
-      gsap.utils.toArray(".reveal").forEach(function(el,i){
-        gsap.to(el, {opacity:1, y:0, duration:.6, delay:i*.05});
-      });
-    }
+  document.getElementById('quoteForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var n = document.getElementById('fName').value.trim();
+    var s = document.getElementById('fService').value;
+    var m = document.getElementById('fMsg').value.trim();
+    var txt = 'Hi, I\'m ' + (n || 'a homeowner') + '. I\'m interested in: ' + s + '.' + (m ? ' ' + m : ' Please share a quote.');
+    window.open('https://wa.me/918448294656?text=' + encodeURIComponent(txt), '_blank', 'noopener');
   });
 })();
+</script>
+<script>
+window.addEventListener('DOMContentLoaded', function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced || !window.gsap) return;
+  if(window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  gsap.from('.hero .sheet-tag, .hero h1, .hero .lede, .hero .cta-row, .hero .proof-strip', {opacity:0, y:20, duration:.6, stagger:.08, ease:'power3.out', delay:.1});
+  gsap.from('.board', {opacity:0, y:26, duration:.8, ease:'power3.out', delay:.35});
+  if(window.ScrollTrigger){
+    gsap.utils.toArray('.reveal').forEach(function(el){
+      gsap.from(el, {opacity:0, y:24, duration:.6, ease:'power2.out', scrollTrigger:{trigger:el, start:'top 88%', once:true}});
+    });
+    gsap.utils.toArray('.plate').forEach(function(el, i){
+      gsap.from(el, {opacity:0, y:24, duration:.55, delay:i*.06, ease:'power2.out', scrollTrigger:{trigger:'#work', start:'top 75%', once:true}});
+    });
+  }
+});
 </script>
 </body>
 </html>
